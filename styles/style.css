@@ -1,0 +1,39 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #eef9bf;
+}
+
+h1 {
+  font-family: "Roboto", sans-serif;
+  font-size: 56px;
+  text-align: center;
+  color: #75b79e;
+  margin: 40px;
+}
+
+.container {
+  padding: 20px 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 32px;
+}
+
+.card {
+  width: 117px;
+  height: 146px;
+  background-color: #a7e9af;
+  border: 1px solid #99cea8;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.parrot {
+  width: 100px;
+}
