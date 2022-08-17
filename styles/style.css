@@ -26,14 +26,39 @@ h1 {
 .card {
   width: 117px;
   height: 146px;
+  position: relative;
+}
+
+.face {
+  width: 100%;
+  height: 100%;
   background-color: #a7e9af;
   border: 1px solid #99cea8;
   border-radius: 5px;
   display: flex;
   justify-content: center;
   align-items: center;
+  position: absolute;
+  backface-visibility: hidden;
+  transition: all 0.8s;
+  transform-style: preserve-3d;
 }
 
-.parrot {
+.back-face {
+  transform: rotateY(180deg);
+}
+
+.match .back-face,
+.turn .back-face {
+  transform: rotateY(0deg);
+}
+
+.match .front-face,
+.turn .front-face {
+  transform: rotateY(-180deg);
+}
+
+.parrot-front,
+.parrot-back {
   width: 100px;
 }
