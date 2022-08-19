@@ -22,15 +22,17 @@ const parrotName = (card) =>
 //
 // Funcao para iniciar o jogo
 function startParrotGame() {
-  numberOfCards = loadNumberCards();
-  dealCards(numberOfCards);
-
   // Variaveis de Controle
+  timer = 0;
+  idTimer = 0;
   roundsCounter = 0;
   isFirstCard = true;
   firstCardName = 0;
   secondCardName = 0;
   flagWait = false;
+
+  numberOfCards = loadNumberCards();
+  dealCards(numberOfCards);
 }
 
 // Ler quantidade de cartas
@@ -52,9 +54,9 @@ function dealCards(numberOfCards) {
   const parrotsGifGame = parrotsGif.sort(comparador).slice(0, nPair);
   const cardsShuffled = parrotsGifGame.concat(parrotsGifGame).sort(comparador);
   //Distribuir cartas no tabuleiro
-  const tabuleiro = document.querySelector(".container");
-  for (let i = 0; i < numberOfCards; i++) {
-    tabuleiro.innerHTML += `
+  const tabuleiroUpper = document.querySelector(".container-upper");
+  for (let i = 0; i < nPair; i++) {
+    tabuleiroUpper.innerHTML += `
     <div class="card" onclick="checkCard(this)">
       <div class="front-face face">
         <img
@@ -72,6 +74,28 @@ function dealCards(numberOfCards) {
       </div>
     </div>`;
   }
+  const tabuleiroDown = document.querySelector(".container-down");
+  for (let i = nPair; i < numberOfCards; i++) {
+    tabuleiroDown.innerHTML += `
+    <div class="card" onclick="checkCard(this)">
+      <div class="front-face face">
+        <img
+          class="parrot-front"
+          src="./images/parrot.png"
+          alt="a parrot"
+        />
+      </div>
+      <div class="back-face face">
+        <img
+          class="parrot-back"
+          src="./images/${cardsShuffled[i]}"
+          alt="a parrot's gif"
+        />
+      </div>
+    </div>`;
+  }
+  // Inicia a contagem do timer;
+  idTimer = setInterval(countTimer, intervalSeconds * 1000);
 }
 
 // *****************************************
@@ -100,6 +124,7 @@ function matchCard(card) {
   }
   const totalMatched = document.querySelectorAll(".match").length;
   if (totalMatched === numberOfCards) {
+    clearInterval(idTimer);
     setTimeout(endOfGame, oneSecond);
   }
 }
@@ -133,13 +158,45 @@ function checkCard(card) {
 }
 
 function endOfGame() {
-  alert(`Você ganhou em ${roundsCounter} jogadas!`);
+  alert(
+    `Você ganhou em ${roundsCounter} jogadas em ${timer.toFixed(1)} segundos!`
+  );
+
+  clearTabuleiro();
+
+  let reload = prompt("Deseja jogar novamente?\nDigite: 'sim' ou não'");
+  while (!["sim", "não"].includes(reload)) {
+    reload = prompt("Deseja jogar novamente?\nDigite: 'sim' ou não'");
+    console.log("laco", reload);
+  }
+  if (reload === "sim") {
+    startParrotGame();
+    console.log();
+  }
+  console.log("FINAL");
+}
+
+function countTimer() {
+  timer += intervalSeconds;
+  elementoTimer.innerHTML = timer.toFixed(1);
+}
+
+function clearTabuleiro() {
+  const tabuleiroUpper = document.querySelector(".container-upper");
+  const tabuleiroDown = document.querySelector(".container-down");
+  tabuleiroUpper.innerHTML = "";
+  tabuleiroDown.innerHTML = "";
+  elementoTimer.innerHTML = 0;
 }
 
 // *****************************************
 // Variaveis Auxiliares
 // *****************************************
 const oneSecond = 1000;
+const intervalSeconds = 0.1;
+let timer = 0;
+let idTimer = 0;
+const elementoTimer = document.querySelector(".timer");
 
 // *****************************************
 // Variaveis Controle do Jogo
