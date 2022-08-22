@@ -138,16 +138,15 @@ function checkCard(card) {
       turnCard(card);
       if (isFirstCard) {
         firstCardName = parrotName(card);
-        console.log(`1 - ${firstCardName}`);
+        // console.log(`1 - ${firstCardName}`);
         isFirstCard = false;
       } else {
         secondCardName = parrotName(card);
-        console.log(`2 - ${secondCardName}`);
+        // console.log(`2 - ${secondCardName}`);
         if (firstCardName === secondCardName) {
           matchCard(card);
         } else {
           flagWait = true;
-          console.log(flagWait);
           setTimeout(unturnCard, oneSecond, card);
         }
         roundsCounter++; //incremeta round
@@ -167,13 +166,10 @@ function endOfGame() {
   let reload = prompt("Deseja jogar novamente?\nDigite: 'sim' ou não'");
   while (!["sim", "não"].includes(reload)) {
     reload = prompt("Deseja jogar novamente?\nDigite: 'sim' ou não'");
-    console.log("laco", reload);
   }
   if (reload === "sim") {
     startParrotGame();
-    console.log();
   }
-  console.log("FINAL");
 }
 
 function countTimer() {
